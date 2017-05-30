@@ -106,9 +106,24 @@ public class HuffmanCoding {
 	 */
 	public String decode(String encoded) {
 		
+		StringBuilder decodedStr = new StringBuilder();
+		HuffmanNode node = tree;
 		
+		for (char c : encoded.toCharArray()) {
+			
+			if (c == '0') {
+				node = node.left;
+			} else {
+				node = node.right;
+			}
+			
+			if (node.value != null) {
+				decodedStr.append(node.value);
+				node = tree;
+			}		
+		}
 		
-		return "";
+		return decodedStr.toString();
 	}
 
 	/**
@@ -119,6 +134,7 @@ public class HuffmanCoding {
 	 */
 	public String getInformation() {
 		System.out.print(tree.toString());
-		return tree.toString();
+		System.out.print(encodingValues.toString());
+		return encodingValues.toString();
 	}
 }
