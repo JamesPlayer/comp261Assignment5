@@ -357,10 +357,13 @@ public class Assignment5 {
 
 		// a text output area for writing information.
 		compressionOutput = new JTextArea(COMP_OUTPUT_ROWS, COMP_OUTPUT_COLS);
-		compressionOutput.setLineWrap(true);
-		compressionOutput.setWrapStyleWord(true);
+		compressionOutput.setLineWrap(false);
+		compressionOutput.setWrapStyleWord(false);
 		compressionOutput.setEditable(false);
 		scroll = new JScrollPane(compressionOutput);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+
 
 		// put it all together
 		JPanel right = new JPanel();
