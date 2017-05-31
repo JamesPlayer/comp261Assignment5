@@ -12,7 +12,7 @@ public class LempelZiv {
 		int windowSize = 100;
 		
 		// Initial value
-		result.append("[0,0," + input.charAt(0) + "]");
+		result.append("[0|0|" + input.charAt(0) + "]");
 		
 		while (cursor < input.length()) {
 			int lookahead = 0;
@@ -30,7 +30,7 @@ public class LempelZiv {
 					prevMatch = match;
 					lookahead = lookahead + 1;
 				} else {
-					result.append("[" + (lookahead == 0 ? 0 : cursor - (startOfWindow + prevMatch)) + "," + lookahead + "," + input.charAt(cursor+lookahead) + "]");
+					result.append("[" + (lookahead == 0 ? 0 : cursor - (startOfWindow + prevMatch)) + "|" + lookahead + "|" + input.charAt(cursor+lookahead) + "]");
 					cursor = cursor + lookahead + 1;
 					break;
 				}
