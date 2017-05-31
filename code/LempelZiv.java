@@ -7,8 +7,38 @@ public class LempelZiv {
 	 * text string.
 	 */
 	public String compress(String input) {
-		// TODO fill this in.
-		return "";
+		StringBuffer result = new StringBuffer();
+		int cursor = 1;
+		int windowSize = 100;
+		
+		// Initial value
+		result.append("[0,0," + input.charAt(0) + "]");
+		
+		while (cursor < input.length()) {
+			int lookahead = 0;
+			int prevMatch = 0;
+			
+			while (true) {
+				
+				int endOfWindow = cursor-1;
+				int startOfWindow = (cursor < windowSize) ? 0 : cursor-windowSize;
+				String haystack = input.substring(startOfWindow, endOfWindow+1);
+				String needle = input.substring(cursor, cursor+lookahead+1);
+				int match = haystack.indexOf(needle);
+				
+				if (match != -1) {
+					prevMatch = match;
+					lookahead = lookahead + 1;
+				} else {
+					result.append("[" + (lookahead == 0 ? 0 : cursor - (startOfWindow + prevMatch)) + "," + lookahead + "," + input.charAt(cursor+lookahead) + "]");
+					cursor = cursor + lookahead + 1;
+					break;
+				}
+			}
+		}
+		
+		
+		return result.toString();
 	}
 
 	/**
