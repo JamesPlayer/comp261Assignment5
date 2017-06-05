@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * A new instance of LempelZiv is created for every run.
  */
@@ -26,10 +28,10 @@ public class LempelZiv {
 				String needle = input.substring(cursor, cursor+lookahead+1);
 				int match = haystack.indexOf(needle);
 				
-				if (match != -1) {
+				if (match != -1 && (cursor+lookahead) <= input.length()-2) {
 					prevMatch = match;
 					lookahead = lookahead + 1;
-				} else {
+				} else {	
 					result.append("[" + (lookahead == 0 ? 0 : cursor - (startOfWindow + prevMatch)) + "|" + lookahead + "|" + input.charAt(cursor+lookahead) + "]");
 					cursor = cursor + lookahead + 1;
 					break;
@@ -46,8 +48,33 @@ public class LempelZiv {
 	 * text string.
 	 */
 	public String decompress(String compressed) {
-		// TODO fill this in.
-		return "";
+		
+		Scanner scan = new Scanner(compressed);
+		int cursor = 0;
+		int offset = 0;
+		int length = 0;
+		String ch;
+		StringBuffer result = new StringBuffer();
+		
+		scan.useDelimiter("\\[|\\]\\[|\\]|\\|");
+		
+		while (scan.hasNext()) {
+			offset = scan.nextInt();
+			length = scan.nextInt();
+			ch = scan.next();
+			
+			for (int j = 0; j < length; j++) {
+				result.append(result.charAt(cursor-offset));
+				cursor++;
+			}
+			
+			result.append(ch);
+			cursor++;
+		}
+		
+		scan.close();
+		
+		return result.toString();
 	}
 
 	/**
